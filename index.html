@@ -2,166 +2,104 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اسد بلس - تطبيقات بلس للايفون</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ذكاء افتراضي | AI Demo Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ========== الهيدر ========== -->
-    <header class="header" id="header">
-        <div class="header-inner">
-            <a href="#" class="logo">
-                <div class="logo-icon">✦</div>
-                <div class="logo-text">اسد<span> بلس</span></div>
-            </a>
-            <nav class="nav-links" id="navLinks">
-                <a href="#" class="active" data-category="all">الكل</a>
-                <a href="#" data-category="social">تواصل اجتماعي</a>
-                <a href="#" data-category="entertainment">ترفيه</a>
-                <a href="#" data-category="tools">أدوات</a>
-                <a href="#" data-category="games">ألعاب</a>
-            </nav>
-            <div class="header-actions">
-                <button class="cart-btn" id="cartBtn" aria-label="سلة المشتريات">
-                    🛒
-                    <span class="cart-count" id="cartCount">0</span>
-                </button>
-                <button class="admin-btn" id="adminBtn" title="مركز استلام الطلبات (للمالك)">📋</button>
-                <button class="menu-toggle" id="menuToggle" aria-label="القائمة">☰</button>
-            </div>
-        </div>
-    </header>
 
-    <!-- ========== قسم الترحيب ========== -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">⚡ تطبيقات بلس حصرية 2026</div>
-            <h1>أفضل <span>تطبيقات بلس</span> للايفون</h1>
-            <p>استمتع بميزات إضافية غير محدودة مع تطبيقات بلس المعدلة – واتساب بلس، يوتيوب بلس، انستقرام بلس والمزيد بضغطة زر.</p>
-            <div class="hero-stats">
-                <div class="hero-stat"><div class="stat-number" id="totalApps">12</div><div class="stat-label">تطبيق بلس</div></div>
-                <div class="hero-stat"><div class="stat-number">+50k</div><div class="stat-label">تحميل</div></div>
-                <div class="hero-stat"><div class="stat-number">4.9</div><div class="stat-label">تقييم ⭐</div></div>
-            </div>
-        </div>
-    </section>
+<div class="stars-3d"></div>
+<div class="cursor-aura"></div>
 
-    <!-- ========== البحث والفلترة ========== -->
-    <div class="search-filter-section">
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="ابحث عن تطبيق بلس...">
-            <span class="search-icon">🔍</span>
-        </div>
-        <div class="filter-chips" id="filterChips">
-            <button class="chip active" data-filter="all">الكل</button>
-            <button class="chip" data-filter="premium">مميز ✨</button>
-            <button class="chip" data-filter="free">مجاني 🆓</button>
-            <button class="chip" data-filter="new">جديد 🆕</button>
+<nav class="glass-nav">
+    <div class="logo">
+        <i class="fas fa-microchip"></i>
+        <span>ذكاء<span class="neon"> افتراضي</span></span>
+    </div>
+    <div class="nav-links">
+        <a href="#home" class="active">الرئيسية</a>
+        <a href="#sentiment">تحليل المشاعر</a>
+        <a href="#jokes">توليد نكات</a>
+        <a href="#names">اقتراح أسماء</a>
+    </div>
+</nav>
+
+<section id="home" class="hero">
+    <div class="hero-bg-fallback"></div>
+    <div class="hero-content">
+        <div class="ai-badge"><i class="fas fa-brain"></i> AI EXPERIENCE 4K</div>
+        <h1 class="futuristic-text">اختبر <span class="neon">الذكاء الاصطناعي</span> الآن</h1>
+        <p>ثلاث أدوات ذكاء اصطناعي تعمل بسرعة الضوء – تحليل، إبداع، واقتراحات ذكية.</p>
+        <div class="hero-cards">
+            <div class="mini-card" onclick="scrollToSection('sentiment')"><i class="fas fa-smile"></i> تحليل المشاعر</div>
+            <div class="mini-card" onclick="scrollToSection('jokes')"><i class="fas fa-laugh"></i> نكات فورية</div>
+            <div class="mini-card" onclick="scrollToSection('names')"><i class="fas fa-trademark"></i> اقتراح أسماء</div>
         </div>
     </div>
+</section>
 
-    <!-- ========== بطاقات التطبيقات ========== -->
-    <main class="apps-grid" id="appsGrid">
-        <!-- يتم حقن البطاقات عبر JavaScript -->
-    </main>
-
-    <!-- ========== رسالة عدم وجود نتائج ========== -->
-    <div class="no-results" id="noResults" style="display: none;">
-        <div class="no-results-icon">🔍</div>
-        <h3>لا توجد نتائج</h3>
-        <p>جرب البحث عن تطبيق آخر أو غير الفلتر</p>
-    </div>
-
-    <!-- ========== مودال سلة المشتريات ========== -->
-    <div class="modal-overlay" id="cartModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>🛒 سلة المشتريات</h2>
-                <button class="modal-close" id="closeCart">✕</button>
-            </div>
-            <div class="cart-items" id="cartItems">
-                <p class="empty-cart">السلة فارغة حالياً</p>
-            </div>
-            <div class="cart-footer" id="cartFooter" style="display: none;">
-                <div class="cart-total">
-                    <span>الإجمالي:</span>
-                    <span class="total-price" id="totalPrice">0 ر.س</span>
-                </div>
-                <button class="checkout-btn" id="checkoutBtn">متابعة الدفع 🚀</button>
+<!-- أداة تحليل المشاعر -->
+<section id="sentiment" class="tool-section">
+    <div class="container">
+        <div class="section-header">
+            <i class="fas fa-chart-line"></i>
+            <h2>تحليل <span class="neon">المشاعر</span></h2>
+            <p>اكتب جملة وسيحللها الذكاء الاصطناعي: إيجابي، سلبي، أو محايد</p>
+        </div>
+        <div class="tool-card">
+            <textarea id="sentimentInput" rows="3" placeholder="اكتب نصك هنا... مثال: أحب هذا الموقع كثيراً!"></textarea>
+            <button id="analyzeBtn" class="glow-btn"><i class="fas fa-microphone-alt"></i> حلل المشاعر</button>
+            <div id="sentimentResult" class="result-box">
+                <i class="fas fa-face-smile"></i> <span>النتيجة ستظهر هنا</span>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- ========== مودال تفاصيل التطبيق ========== -->
-    <div class="modal-overlay" id="detailModal">
-        <div class="modal-content detail-content">
-            <div class="modal-header">
-                <h2 id="detailTitle">تفاصيل التطبيق</h2>
-                <button class="modal-close" id="closeDetail">✕</button>
-            </div>
-            <div class="detail-body" id="detailBody">
-                <!-- يتم حقن التفاصيل -->
+<!-- أداة توليد نكات -->
+<section id="jokes" class="tool-section alt-bg">
+    <div class="container">
+        <div class="section-header">
+            <i class="fas fa-theater-masks"></i>
+            <h2>توليد <span class="neon">نكات ذكية</span></h2>
+            <p>اضغط الزر لتضحك مع أقوى نكات الذكاء الاصطناعي</p>
+        </div>
+        <div class="tool-card">
+            <button id="generateJokeBtn" class="glow-btn"><i class="fas fa-robot"></i> نكتة جديدة</button>
+            <div id="jokeResult" class="result-box">
+                <i class="fas fa-quote-right"></i> <span>سأخبرك نكتة ... انتظر!</span>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- ========== مودال الدفع ========== -->
-    <div class="modal-overlay" id="paymentModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>💳 تأكيد الطلب والدفع</h2>
-                <button class="modal-close" id="closePayment">✕</button>
-            </div>
-            <form id="paymentForm" class="payment-form">
-                <div class="form-group">
-                    <label>الاسم الكامل *</label>
-                    <input type="text" id="custName" required placeholder="أدخل اسمك الكامل">
-                </div>
-                <div class="form-group">
-                    <label>رقم الجوال / واتساب *</label>
-                    <input type="text" id="custPhone" required placeholder="للتواصل معك بعد الشراء">
-                </div>
-                <div class="form-group">
-                    <label>الدولة *</label>
-                    <select id="custCountry" required>
-                        <option value="">اختر الدولة</option>
-                        <option value="syria">سوريا</option>
-                        <option value="saudi">السعودية</option>
-                        <option value="other">دول أخرى / دولي</option>
-                    </select>
-                </div>
-                <div class="form-group" id="paymentMethodGroup" style="display:none;">
-                    <label>طريقة الدفع *</label>
-                    <div class="payment-methods" id="paymentMethods">
-                        <!-- تحقن حسب الدولة -->
-                    </div>
-                </div>
-                <div class="form-group" id="paymentDetailsGroup" style="display:none;">
-                    <label id="paymentDetailsLabel">تفاصيل إضافية</label>
-                    <input type="text" id="paymentDetailsInput" placeholder="حسب طريقة الدفع">
-                </div>
-                <div class="cart-summary" id="paymentCartSummary"></div>
-                <button type="submit" class="checkout-btn">✅ تأكيد الطلب</button>
-            </form>
+<!-- أداة اقتراح أسماء -->
+<section id="names" class="tool-section">
+    <div class="container">
+        <div class="section-header">
+            <i class="fas fa-lightbulb"></i>
+            <h2>اقتراح <span class="neon">أسماء إبداعية</span></h2>
+            <p>أدخل مجالاً (شركة، مشروع، طفل) وسأقترح عليك أسماء فريدة</p>
         </div>
-    </div>
-
-    <!-- ========== مودال طلبات المالك ========== -->
-    <div class="modal-overlay" id="ordersModal">
-        <div class="modal-content orders-content">
-            <div class="modal-header">
-                <h2>📋 مركز استلام الطلبات (للمالك)</h2>
-                <button class="modal-close" id="closeOrders">✕</button>
-            </div>
-            <div class="orders-list" id="ordersList">
-                <p class="empty-cart">لا توجد طلبات حالياً</p>
+        <div class="tool-card">
+            <input type="text" id="nameContext" placeholder="مثال: شركة تقنية، مطعم، متجر أزياء، ولد...">
+            <button id="suggestBtn" class="glow-btn"><i class="fas fa-magic"></i> اقترح أسماء</button>
+            <div id="namesResult" class="result-box">
+                <i class="fas fa-list-ul"></i> <span>الأسماء ستظهر هنا</span>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- ========== إشعار منبثق ========== -->
-    <div class="toast" id="toast"></div>
+<footer>
+    <p>🧠 ذكاء افتراضي | تجربة 4K – جميع الأدوات تعمل محلياً بالكامل (JavaScript) بدون أي api خارجي</p>
+    <div class="contact-footer" onclick="copyNumber('963998281908')">
+        <i class="fab fa-whatsapp"></i> 963 998 281 908
+    </div>
+</footer>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
