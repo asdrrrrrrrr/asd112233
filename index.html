@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اسد بلس - تطبيقات بلس للايفون</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ========== الهيدر ========== -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">✦</div>
+                <div class="logo-text">اسد<span> بلس</span></div>
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="#" class="active" data-category="all">الكل</a>
+                <a href="#" data-category="social">تواصل اجتماعي</a>
+                <a href="#" data-category="entertainment">ترفيه</a>
+                <a href="#" data-category="tools">أدوات</a>
+                <a href="#" data-category="games">ألعاب</a>
+            </nav>
+            <div class="header-actions">
+                <button class="cart-btn" id="cartBtn" aria-label="سلة المشتريات">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="admin-btn" id="adminBtn" title="مركز استلام الطلبات (للمالك)">📋</button>
+                <button class="menu-toggle" id="menuToggle" aria-label="القائمة">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== قسم الترحيب ========== -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">⚡ تطبيقات بلس حصرية 2026</div>
+            <h1>أفضل <span>تطبيقات بلس</span> للايفون</h1>
+            <p>استمتع بميزات إضافية غير محدودة مع تطبيقات بلس المعدلة – واتساب بلس، يوتيوب بلس، انستقرام بلس والمزيد بضغطة زر.</p>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="stat-number" id="totalApps">12</div><div class="stat-label">تطبيق بلس</div></div>
+                <div class="hero-stat"><div class="stat-number">+50k</div><div class="stat-label">تحميل</div></div>
+                <div class="hero-stat"><div class="stat-number">4.9</div><div class="stat-label">تقييم ⭐</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== البحث والفلترة ========== -->
+    <div class="search-filter-section">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ابحث عن تطبيق بلس...">
+            <span class="search-icon">🔍</span>
+        </div>
+        <div class="filter-chips" id="filterChips">
+            <button class="chip active" data-filter="all">الكل</button>
+            <button class="chip" data-filter="premium">مميز ✨</button>
+            <button class="chip" data-filter="free">مجاني 🆓</button>
+            <button class="chip" data-filter="new">جديد 🆕</button>
+        </div>
+    </div>
+
+    <!-- ========== بطاقات التطبيقات ========== -->
+    <main class="apps-grid" id="appsGrid">
+        <!-- يتم حقن البطاقات عبر JavaScript -->
+    </main>
+
+    <!-- ========== رسالة عدم وجود نتائج ========== -->
+    <div class="no-results" id="noResults" style="display: none;">
+        <div class="no-results-icon">🔍</div>
+        <h3>لا توجد نتائج</h3>
+        <p>جرب البحث عن تطبيق آخر أو غير الفلتر</p>
+    </div>
+
+    <!-- ========== مودال سلة المشتريات ========== -->
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 سلة المشتريات</h2>
+                <button class="modal-close" id="closeCart">✕</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <p class="empty-cart">السلة فارغة حالياً</p>
+            </div>
+            <div class="cart-footer" id="cartFooter" style="display: none;">
+                <div class="cart-total">
+                    <span>الإجمالي:</span>
+                    <span class="total-price" id="totalPrice">0 ر.س</span>
+                </div>
+                <button class="checkout-btn" id="checkoutBtn">متابعة الدفع 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== مودال تفاصيل التطبيق ========== -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-content detail-content">
+            <div class="modal-header">
+                <h2 id="detailTitle">تفاصيل التطبيق</h2>
+                <button class="modal-close" id="closeDetail">✕</button>
+            </div>
+            <div class="detail-body" id="detailBody">
+                <!-- يتم حقن التفاصيل -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== مودال الدفع ========== -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💳 تأكيد الطلب والدفع</h2>
+                <button class="modal-close" id="closePayment">✕</button>
+            </div>
+            <form id="paymentForm" class="payment-form">
+                <div class="form-group">
+                    <label>الاسم الكامل *</label>
+                    <input type="text" id="custName" required placeholder="أدخل اسمك الكامل">
+                </div>
+                <div class="form-group">
+                    <label>رقم الجوال / واتساب *</label>
+                    <input type="text" id="custPhone" required placeholder="للتواصل معك بعد الشراء">
+                </div>
+                <div class="form-group">
+                    <label>الدولة *</label>
+                    <select id="custCountry" required>
+                        <option value="">اختر الدولة</option>
+                        <option value="syria">سوريا</option>
+                        <option value="saudi">السعودية</option>
+                        <option value="other">دول أخرى / دولي</option>
+                    </select>
+                </div>
+                <div class="form-group" id="paymentMethodGroup" style="display:none;">
+                    <label>طريقة الدفع *</label>
+                    <div class="payment-methods" id="paymentMethods">
+                        <!-- تحقن حسب الدولة -->
+                    </div>
+                </div>
+                <div class="form-group" id="paymentDetailsGroup" style="display:none;">
+                    <label id="paymentDetailsLabel">تفاصيل إضافية</label>
+                    <input type="text" id="paymentDetailsInput" placeholder="حسب طريقة الدفع">
+                </div>
+                <div class="cart-summary" id="paymentCartSummary"></div>
+                <button type="submit" class="checkout-btn">✅ تأكيد الطلب</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========== مودال طلبات المالك ========== -->
+    <div class="modal-overlay" id="ordersModal">
+        <div class="modal-content orders-content">
+            <div class="modal-header">
+                <h2>📋 مركز استلام الطلبات (للمالك)</h2>
+                <button class="modal-close" id="closeOrders">✕</button>
+            </div>
+            <div class="orders-list" id="ordersList">
+                <p class="empty-cart">لا توجد طلبات حالياً</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== إشعار منبثق ========== -->
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
