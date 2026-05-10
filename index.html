@@ -3,103 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>ذكاء افتراضي | AI Demo Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>ذكرى | همام محمد الحاجي - رحمه الله</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="particles"></div>
+    <div class="light-overlay"></div>
 
-<div class="stars-3d"></div>
-<div class="cursor-aura"></div>
-
-<nav class="glass-nav">
-    <div class="logo">
-        <i class="fas fa-microchip"></i>
-        <span>ذكاء<span class="neon"> افتراضي</span></span>
-    </div>
-    <div class="nav-links">
-        <a href="#home" class="active">الرئيسية</a>
-        <a href="#sentiment">تحليل المشاعر</a>
-        <a href="#jokes">توليد نكات</a>
-        <a href="#names">اقتراح أسماء</a>
-    </div>
-</nav>
-
-<section id="home" class="hero">
-    <div class="hero-bg-fallback"></div>
-    <div class="hero-content">
-        <div class="ai-badge"><i class="fas fa-brain"></i> AI EXPERIENCE 4K</div>
-        <h1 class="futuristic-text">اختبر <span class="neon">الذكاء الاصطناعي</span> الآن</h1>
-        <p>ثلاث أدوات ذكاء اصطناعي تعمل بسرعة الضوء – تحليل، إبداع، واقتراحات ذكية.</p>
-        <div class="hero-cards">
-            <div class="mini-card" onclick="scrollToSection('sentiment')"><i class="fas fa-smile"></i> تحليل المشاعر</div>
-            <div class="mini-card" onclick="scrollToSection('jokes')"><i class="fas fa-laugh"></i> نكات فورية</div>
-            <div class="mini-card" onclick="scrollToSection('names')"><i class="fas fa-trademark"></i> اقتراح أسماء</div>
+    <div class="wrapper">
+        <!-- البطاقة الرئيسية -->
+        <div class="memorial-card fade-up">
+            <div class="card-inner">
+                <div class="icon-animated">
+                    <i class="fas fa-mosque"></i>
+                    <div class="noor"></div>
+                </div>
+                <div class="title">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+                <div class="main-text">
+                    <span class="subtitle">المرحوم الشاب</span>
+                    <h1>همام محمد الحاجي</h1>
+                    <span class="rahma">يا رحمة</span>
+                </div>
+                <div class="verse">"كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ"</div>
+                <div class="dua">
+                    اللَّهُمَّ ارْحَمْهُ وَاغْفِرْ لَهُ وَأَسْكِنْهُ فَسِيحَ جَنَّاتِكَ<br>
+                    وَأَلْهِمْ أَهْلَهُ وَذَوِيهِ الصَّبْرَ وَالسُّلْوَانَ
+                </div>
+                <div class="signature">🤲 إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ 🤲</div>
+            </div>
         </div>
-    </div>
-</section>
 
-<!-- أداة تحليل المشاعر -->
-<section id="sentiment" class="tool-section">
-    <div class="container">
-        <div class="section-header">
-            <i class="fas fa-chart-line"></i>
-            <h2>تحليل <span class="neon">المشاعر</span></h2>
-            <p>اكتب جملة وسيحللها الذكاء الاصطناعي: إيجابي، سلبي، أو محايد</p>
+        <!-- قسم المشاركة -->
+        <div class="share-card fade-up">
+            <h3><i class="fas fa-share-nodes"></i> شارك ذكراه ليُكتب أجرك</h3>
+            <div class="share-grid">
+                <button class="share-btn whatsapp" id="whatsappShare"><i class="fab fa-whatsapp"></i> واتساب</button>
+                <button class="share-btn copy" id="copyLink"><i class="fas fa-link"></i> نسخ الرابط</button>
+            </div>
+            <div id="copyMsg" class="copy-msg">✅ تم نسخ الرابط</div>
         </div>
-        <div class="tool-card">
-            <textarea id="sentimentInput" rows="3" placeholder="اكتب نصك هنا... مثال: أحب هذا الموقع كثيراً!"></textarea>
-            <button id="analyzeBtn" class="glow-btn"><i class="fas fa-microphone-alt"></i> حلل المشاعر</button>
-            <div id="sentimentResult" class="result-box">
-                <i class="fas fa-face-smile"></i> <span>النتيجة ستظهر هنا</span>
+
+        <!-- نظام التعليقات -->
+        <div class="comments-card fade-up">
+            <div class="add-comment">
+                <div class="comment-input-area">
+                    <input type="text" id="commentName" class="name-input" placeholder="اسمك (اختياري)">
+                    <textarea id="commentInput" rows="3" placeholder="اكتب كلماتك من القلب... اللهم ارحم همام..."></textarea>
+                    <button id="publishComment" class="publish-btn"><i class="fas fa-pen"></i> نشر التعليق</button>
+                </div>
+            </div>
+
+            <div class="comments-header">
+                <div class="header-title">
+                    <i class="fas fa-message"></i>
+                    <h4>كلمات المترحمين</h4>
+                    <span id="totalComments" class="count">0</span>
+                </div>
+                <div class="sort">
+                    <button id="sortNew" class="sort-active"><i class="fas fa-clock"></i> الأحدث</button>
+                    <button id="sortOld"><i class="fas fa-calendar"></i> الأقدم</button>
+                </div>
+            </div>
+
+            <div id="commentsContainer" class="comments-list">
+                <div class="loading"><i class="fas fa-spinner fa-pulse"></i> جاري التحميل...</div>
+            </div>
+            
+            <!-- قصة الوفاة (منسقة بنفس ألوان البطاقة) -->
+            <div class="story-note fade-up">
+                <div class="story-header">
+                    <i class="fas fa-fire"></i>
+                    <span>قصة الوفاة</span>
+                </div>
+                <p class="story-text">
+                    توفي الشاب همام محمد الحاجي بسبب حريق حصل له من عبوة الغاز في المطبخ اثر تنفيس لم ينتبه عليه وكان اشبه بقنبلة موقتة عندما أشعل النار أُلقيت حتفه. رحمه الله رحمة واسعة وأسكنه فسيح جناته.
+                </p>
+                <div class="story-footer">
+                    <i class="fas fa-hand-peace"></i> رحمه الله وألهم أهله الصبر والسلوان
+                </div>
+            </div>
+
+            <!-- قسم الأحاديث عن الشهداء -->
+            <div class="hadith-section fade-up">
+                <div class="hadith-header">
+                    <i class="fas fa-star-of-life"></i>
+                    <span>أحاديث عن الشهداء</span>
+                    <i class="fas fa-dove"></i>
+                </div>
+                <div class="hadith-container">
+                    <div class="hadith-card">
+                        <i class="fas fa-quote-right"></i>
+                        <p class="hadith-text">قال رسول الله ﷺ: «ما تظنون بالشهيد فيكم؟» قالوا: الله ورسوله أعلم، قال: «الشهيد يغفر له عند أول دفعة من دمه، ويرى مقعده من الجنة، ويحلى بحلية الإيمان، ويُزوج من الحور العين، ويُجار من عذاب القبر، ويأمن من الفزع الأكبر». (رواه الترمذي)</p>
+                    </div>
+                    <div class="hadith-card">
+                        <i class="fas fa-quote-right"></i>
+                        <p class="hadith-text">قال رسول الله ﷺ: «ما من عبد يموت له ثلاثة من الولد لم يبلغوا الحنث إلا دخل الجنة»، فقالت عائشة: واثنان؟ قال: «واثنان». (رواه البخاري)</p>
+                    </div>
+                    <div class="hadith-card">
+                        <i class="fas fa-quote-right"></i>
+                        <p class="hadith-text">قال رسول الله ﷺ: «أول زمرة يدخلون الجنة على صورة القمر ليلة البدر». رحم الله شهيدنا همام وجعله في زمرتهم.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</section>
 
-<!-- أداة توليد نكات -->
-<section id="jokes" class="tool-section alt-bg">
-    <div class="container">
-        <div class="section-header">
-            <i class="fas fa-theater-masks"></i>
-            <h2>توليد <span class="neon">نكات ذكية</span></h2>
-            <p>اضغط الزر لتضحك مع أقوى نكات الذكاء الاصطناعي</p>
-        </div>
-        <div class="tool-card">
-            <button id="generateJokeBtn" class="glow-btn"><i class="fas fa-robot"></i> نكتة جديدة</button>
-            <div id="jokeResult" class="result-box">
-                <i class="fas fa-quote-right"></i> <span>سأخبرك نكتة ... انتظر!</span>
-            </div>
-        </div>
-    </div>
-</section>
+    <div id="toastMsg" class="toast-message"></div>
 
-<!-- أداة اقتراح أسماء -->
-<section id="names" class="tool-section">
-    <div class="container">
-        <div class="section-header">
-            <i class="fas fa-lightbulb"></i>
-            <h2>اقتراح <span class="neon">أسماء إبداعية</span></h2>
-            <p>أدخل مجالاً (شركة، مشروع، طفل) وسأقترح عليك أسماء فريدة</p>
-        </div>
-        <div class="tool-card">
-            <input type="text" id="nameContext" placeholder="مثال: شركة تقنية، مطعم، متجر أزياء، ولد...">
-            <button id="suggestBtn" class="glow-btn"><i class="fas fa-magic"></i> اقترح أسماء</button>
-            <div id="namesResult" class="result-box">
-                <i class="fas fa-list-ul"></i> <span>الأسماء ستظهر هنا</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<footer>
-    <p>🧠 ذكاء افتراضي | تجربة 4K – جميع الأدوات تعمل محلياً بالكامل (JavaScript) بدون أي api خارجي</p>
-    <div class="contact-footer" onclick="copyNumber('963998281908')">
-        <i class="fab fa-whatsapp"></i> 963 998 281 908
-    </div>
-</footer>
-
-<script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
