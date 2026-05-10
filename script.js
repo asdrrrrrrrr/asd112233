@@ -1,173 +1,140 @@
-// ==================================================
-// 1. أداة تحليل المشاعر (تعمل محلياً)
-// ==================================================
-const sentimentInput = document.getElementById('sentimentInput');
-const analyzeBtn = document.getElementById('analyzeBtn');
-const sentimentResult = document.getElementById('sentimentResult');
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-function analyzeSentiment(text) {
-    if (!text.trim()) return "✏️ اكتب نصاً أولاً ليتم تحليله";
-    const positiveWords = ['جميل', 'رائع', 'حلو', 'ممتاز', 'سعيد', 'أحب', 'شكراً', 'رائعة', 'أفضل', 'مبهر', 'خرافي', 'عظيم'];
-    const negativeWords = ['سيء', 'حزين', 'بائس', 'فظيع', 'ممل', 'أكره', 'غبي', 'مخيب', 'خطأ', 'ملل', 'تعبان'];
-    let score = 0;
-    positiveWords.forEach(word => {
-        if (text.includes(word)) score++;
-    });
-    negativeWords.forEach(word => {
-        if (text.includes(word)) score--;
-    });
-    if (score > 0) return '😊 إيجابي 🌟 (عبارة مليئة بالطاقة الإيجابية)';
-    if (score < 0) return '😞 سلبي 🍂 (يمكن تحسينها بتفاؤل أكبر)';
-    return '😐 محايد (ضع مشاعر أقوى للحصول على تحليل دقيق)';
-}
-
-if (analyzeBtn) {
-    analyzeBtn.onclick = () => {
-        const text = sentimentInput ? sentimentInput.value : '';
-        const result = analyzeSentiment(text);
-        if (sentimentResult) {
-            sentimentResult.innerHTML = `<i class="fas fa-chart-simple"></i> <span>${result}</span>`;
-        }
-    };
-}
-
-// ==================================================
-// 2. أداة توليد نكات عشوائية (مكتبة داخلية)
-// ==================================================
-const generateJokeBtn = document.getElementById('generateJokeBtn');
-const jokeResultSpan = document.getElementById('jokeResult');
-
-const jokesLibrary = [
-    "🚀 لما الذكاء الاصطناعي يحبك: يقول لك 'أنت إنسان رائع' مع إنه ما عنده مشاعر!",
-    "🧠 البرمجة مثل الصلاة: لو ما ركزت فيها، بتضيع منك الأجر (والسطر)!",
-    "🐱‍👤 سألت الذكاء الاصطناعي: وش أفضل نظام؟ قال: 'أنت لما تكون مبسوط'.",
-    "💻 المبرمج الوحيد اللي يقدر ينام ساعة ويصحى يشتغل على شاشة سودة يحبها.",
-    "🐧 Linux مثل سيارة قديمة: تحتاج تعرف تصلحها عشان تستمتع فيها.",
-    "⚡ من نكت الذكاء الاصطناعي: 'ليش الحاسوب دافئ؟ لأنه يسخن من كثر الشغل'",
-    "🎮 التصميم الجميل للوحة تحكم: يخلي المستخدم يحس إنه طيار قبل لا يضغط زر.",
-    "😂 الذكاء الاصطناعي نكتة: 'وش الفرق بين المبرمج والقهوة؟ القهوة تشتغل بدون bugs'",
-    "🎯 سألوا الذكاء الاصطناعي: وش أسعد لحظة في حياتك؟ قال: يوم ما أحد قال لي invalid syntax."
-];
-
-if (generateJokeBtn && jokeResultSpan) {
-    generateJokeBtn.onclick = () => {
-        const randomIndex = Math.floor(Math.random() * jokesLibrary.length);
-        const joke = jokesLibrary[randomIndex];
-        jokeResultSpan.innerHTML = `<i class="fas fa-face-grin-tongue-squint"></i> <span>${joke}</span>`;
-    };
-}
-
-// ==================================================
-// 3. أداة اقتراح أسماء إبداعية
-// ==================================================
-const nameContextInput = document.getElementById('nameContext');
-const suggestBtn = document.getElementById('suggestBtn');
-const namesResultDiv = document.getElementById('namesResult');
-
-const databaseNames = {
-    'شركة تقنية': ['تك ويف', 'كود دريم', 'داينو تك', 'بيت البرمجيات', 'سمارت ويب', 'أفق تك'],
-    'مطعم': ['سُفرة', 'طعم الأصالة', 'درة المذاق', 'فود تريت', 'ليالي الأكل', 'ذوق الريف'],
-    'متجر أزياء': ['قمرة', 'ستايل فاخر', 'لولو فاشون', 'نسائم', 'روح الأناقة'],
-    'طفل ولد': ['جود', 'وسيم', 'خالد', 'ليث', 'آدم', 'يحيى', 'حمزة', 'سيف'],
-    'طفلة بنت': ['نور', 'سلمى', 'جوري', 'لين', 'ميرال', 'رهف', 'تالا', 'جمانة'],
-    'مشروع خيري': ['نور الأمل', 'عون', 'بداية', 'يد العون', 'الخير جار', 'سند الخير'],
-    'شركة تسويق': ['واصل', 'إنجاز', 'ريتش', 'بصمة تسويق', 'استراتيجي', 'قمة الإبداع']
+const firebaseConfig = {
+  apiKey: "AIzaSyDxwDtepeCvth9pGAi-9Xih6y7upxbcthM",
+  authDomain: "asdhaji-262a2.firebaseapp.com",
+  projectId: "asdhaji-262a2",
+  storageBucket: "asdhaji-262a2.firebasestorage.app",
+  messagingSenderId: "846773778896",
+  appId: "1:846773778896:web:623355876a381182e8e1d5"
 };
 
-function getIdeaFromContext(context) {
-    const inputLower = context.toLowerCase();
-    if (inputLower.includes('تكنولوجيا') || inputLower.includes('برمجة') || inputLower.includes('تقنية')) 
-        return databaseNames['شركة تقنية'];
-    if (inputLower.includes('مطعم') || inputLower.includes('أكل') || inputLower.includes('طعام')) 
-        return databaseNames['مطعم'];
-    if (inputLower.includes('ازياء') || inputLower.includes('موضة') || inputLower.includes('فاشون')) 
-        return databaseNames['متجر أزياء'];
-    if (inputLower.includes('ولد') || inputLower.includes('ذكر') || inputLower.includes('ابن')) 
-        return databaseNames['طفل ولد'];
-    if (inputLower.includes('بنت') || inputLower.includes('انثى') || inputLower.includes('طفلة')) 
-        return databaseNames['طفلة بنت'];
-    if (inputLower.includes('خير') || inputLower.includes('تبرع') || inputLower.includes('وقف')) 
-        return databaseNames['مشروع خيري'];
-    if (inputLower.includes('تسويق') || inputLower.includes('اعلانات')) 
-        return databaseNames['شركة تسويق'];
-    return ['مبدع', 'أثير', 'زاخر', 'باهر', 'آسِر', 'فذ', 'ريادة', 'تألق'];
-}
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-if (suggestBtn && nameContextInput && namesResultDiv) {
-    suggestBtn.onclick = () => {
-        let ctx = nameContextInput.value.trim();
-        if (!ctx) {
-            namesResultDiv.innerHTML = `<i class="fas fa-info-circle"></i> <span>📝 اكتب مجالاً مثل: شركة تقنية، مطعم، مشروع خيري، طفلة بنت...</span>`;
-            return;
-        }
-        const suggestions = getIdeaFromContext(ctx);
-        const formatted = suggestions.map(s => `✨ ${s}`).join(' · ');
-        namesResultDiv.innerHTML = `<i class="fas fa-lightbulb"></i> <span>${formatted}</span>`;
-    };
-}
+let currentOrder = "desc";
+let unsub = null;
 
-// ==================================================
-// 4. مؤثر حركة الضوء (Aura effect)
-// ==================================================
-const cursorAura = document.querySelector('.cursor-aura');
-if (cursorAura) {
-    document.addEventListener('mousemove', (e) => {
-        cursorAura.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    });
-}
+const commentsContainer = document.getElementById("commentsContainer");
+const totalSpan = document.getElementById("totalComments");
+const toastMsg = document.getElementById("toastMsg");
+const commentInput = document.getElementById("commentInput");
+const commentName = document.getElementById("commentName");
+const publishBtn = document.getElementById("publishComment");
 
-// ==================================================
-// 5. نسخ رقم واتساب (خاصية التواصل)
-// ==================================================
-function copyNumber(phoneNumber) {
-    navigator.clipboard.writeText(phoneNumber).then(() => {
-        alert(`✅ تم نسخ الرقم: ${phoneNumber}`);
-    }).catch(() => {
-        alert("❌ فشل النسخ، حاول يدوياً.");
-    });
-}
+const showToast = (text, isError = false) => {
+  toastMsg.innerText = text;
+  toastMsg.style.display = "block";
+  toastMsg.style.background = isError ? "#5a2a1acc" : "#0e1f24cc";
+  setTimeout(() => toastMsg.style.display = "none", 2300);
+};
 
-// ==================================================
-// 6. دالة التمرير السلس للأقسام (للأزرار)
-// ==================================================
-function scrollToSection(sectionId) {
-    const section = document.getElementById(sectionId);
-    if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+const formatDate = (date) => {
+  if (!date) return "";
+  return date.toLocaleDateString("ar-EG", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+};
+
+const escapeHtml = (str) => {
+  if (!str) return "";
+  return str.replace(/[&<>]/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[m]));
+};
+
+const loadComments = () => {
+  if (unsub) unsub();
+  const q = query(collection(db, "comments"), orderBy("timestamp", currentOrder));
+  commentsContainer.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-pulse"></i> يتحمّل الذكريات...</div>';
+  
+  unsub = onSnapshot(q, (snap) => {
+    let comments = [];
+    snap.forEach(doc => comments.push({ id: doc.id, ...doc.data() }));
+    totalSpan.innerText = comments.length;
+    
+    if (comments.length === 0) {
+      commentsContainer.innerHTML = '<div class="loading">🌿 لا توجد كلمات بعد، كن أول من يكتب دعاءً</div>';
+      return;
     }
-}
+    
+    commentsContainer.innerHTML = comments.map(c => `
+      <div class="comment-card" data-id="${c.id}">
+        <div class="comment-header">
+          <span class="commenter-name"><i class="fas fa-user-circle"></i> ${escapeHtml(c.userName || "زائر")}</span>
+          <span class="comment-date">${formatDate(c.timestamp?.toDate())}</span>
+        </div>
+        <div class="comment-body">${escapeHtml(c.text)}</div>
+      </div>
+    `).join("");
+  }, (err) => {
+    console.warn(err);
+    commentsContainer.innerHTML = '<div class="loading">⚠️ خطأ في التحميل</div>';
+  });
+};
 
-// ==================================================
-// 7. تفعيل الروابط في شريط التنقل (اختياري)
-// ==================================================
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href').substring(1);
-        scrollToSection(targetId);
+const addNewComment = async (text, name) => {
+  if (!text.trim()) { 
+    showToast("✍️ اكتب كلمة طيبة للفقيد", true); 
+    return false; 
+  }
+  
+  try {
+    await addDoc(collection(db, "comments"), {
+      text: text.trim(),
+      userName: name.trim() || "زائر",
+      timestamp: new Date()
     });
+    commentInput.value = "";
+    if (commentName) commentName.value = "";
+    showToast("✨ رحم الله الفقيد، شكراً لكلماتك");
+    return true;
+  } catch (err) {
+    showToast("فشل الإرسال: " + err.message, true);
+    return false;
+  }
+};
+
+publishBtn.addEventListener("click", () => {
+  addNewComment(commentInput.value, commentName ? commentName.value : "");
 });
 
-// ==================================================
-// 8. إضافة تأثير النشاط (active) للروابط حسب التمرير
-// ==================================================
-window.addEventListener('scroll', () => {
-    const sections = ['home', 'sentiment', 'jokes', 'names'];
-    let current = '';
-    for (let s of sections) {
-        const element = document.getElementById(s);
-        if (element) {
-            const rect = element.getBoundingClientRect();
-            if (rect.top <= 150 && rect.bottom >= 150) {
-                current = s;
-                break;
-            }
-        }
-    }
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
+commentInput.addEventListener("keydown", (e) => {
+  if (e.ctrlKey && e.key === "Enter") {
+    addNewComment(commentInput.value, commentName ? commentName.value : "");
+  }
 });
+
+document.getElementById("whatsappShare").addEventListener("click", () => {
+  const url = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent("🤲 اللهم ارحم الشاب همام محمد الحاجي وأسكنه فسيح جناتك، شارك في الدعاء له.");
+  window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+});
+
+document.getElementById("copyLink").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    const msgDiv = document.getElementById("copyMsg");
+    msgDiv.style.display = "block";
+    setTimeout(() => msgDiv.style.display = "none", 1700);
+    showToast("📎 تم نسخ الرابط");
+  } catch (err) {
+    showToast("فشل النسخ", true);
+  }
+});
+
+const sortNew = document.getElementById("sortNew");
+const sortOld = document.getElementById("sortOld");
+
+sortNew.addEventListener("click", () => {
+  currentOrder = "desc";
+  sortNew.classList.add("sort-active");
+  sortOld.classList.remove("sort-active");
+  loadComments();
+});
+
+sortOld.addEventListener("click", () => {
+  currentOrder = "asc";
+  sortOld.classList.add("sort-active");
+  sortNew.classList.remove("sort-active");
+  loadComments();
+});
+
+loadComments();
